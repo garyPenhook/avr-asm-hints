@@ -894,7 +894,7 @@ async function provideWorkspaceSymbols(query) {
       const symbolInfo = new vscode.SymbolInformation(
         symbol,
         vscode.SymbolKind.Constant,
-        `${first.kind} (${index.device || 'AVR'} pack)`,
+        `${first.kind} (${index.device || 'AVR®'} pack)`,
         location
       );
 
@@ -1022,7 +1022,7 @@ async function provideHover(document, position) {
 
   if (hits.length > 0) {
     const max = Number(getConfig().get('maxHoverResults', 6));
-    md.appendMarkdown(`\n\n${safeMarkdown(index.device || 'AVR')} pack matches:`);
+    md.appendMarkdown(`\n\n${safeMarkdown(index.device || 'AVR®')} pack matches:`);
     for (const hit of hits.slice(0, max)) {
       const relPath = path.relative(index.root, hit.file) || hit.file;
       md.appendMarkdown(
@@ -1141,7 +1141,7 @@ async function runLookupCommand() {
   const symbol =
     seed ||
     (await vscode.window.showInputBox({
-      prompt: 'Enter AVR symbol to lookup',
+      prompt: 'Enter AVR® symbol to lookup',
       placeHolder: 'Example: RTC_PITCTRLA',
       ignoreFocusOut: true
     }));
@@ -1180,7 +1180,7 @@ async function runLookupCommand() {
 
   if (picks.length === 0) {
     vscode.window.showInformationMessage(
-      `No symbol matches found for "${symbol}" in ${index.device || 'current AVR target'}.`
+      `No symbol matches found for "${symbol}" in ${index.device || 'current AVR® target'}.`
     );
     return;
   }
@@ -1206,12 +1206,12 @@ async function rebuildIndexCommand() {
   const index = await getDfpIndex(true);
   if (!index.scannedFiles.length) {
     vscode.window.showWarningMessage(
-      `AVR ASM Hints: no DFP symbol files found for ${index.device || 'target'} at "${index.root}".`
+      `AVR® ASM Hints: no DFP symbol files found for ${index.device || 'target'} at "${index.root}".`
     );
     return;
   }
   vscode.window.showInformationMessage(
-    `AVR ASM Hints index rebuilt for ${index.device || 'target'} (${index.symbolList.length} symbols).`
+    `AVR® ASM Hints index rebuilt for ${index.device || 'target'} (${index.symbolList.length} symbols).`
   );
 }
 

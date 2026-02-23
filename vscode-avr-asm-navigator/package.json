@@ -1,7 +1,7 @@
 {
 	"name": "avr-asm-navigator",
-	"displayName": "AVR ASM Navigator",
-	"description": "Hover, definition, completion, and symbol lookup helpers for AVR assembly projects.",
+	"displayName": "AVR® ASM Navigator",
+	"description": "Hover, definition, completion, and symbol lookup helpers for AVR® assembly projects.",
 	"version": "0.1.4",
 	"publisher": "avr1-local",
 	"license": "MIT",
@@ -43,7 +43,7 @@
 			{
 				"id": "avr-asm",
 				"aliases": [
-					"AVR Assembly",
+					"AVR® Assembly",
 					"avr-asm"
 				],
 				"extensions": [
@@ -63,25 +63,25 @@
 		"commands": [
 			{
 				"command": "avrAsmHints.lookupSymbol",
-				"title": "AVR ASM: Lookup Symbol"
+				"title": "AVR® ASM: Lookup Symbol"
 			},
 			{
 				"command": "avrAsmHints.rebuildIndex",
-				"title": "AVR ASM: Rebuild Symbol Index"
+				"title": "AVR® ASM: Rebuild Symbol Index"
 			}
 		],
 		"configuration": {
-			"title": "AVR ASM Navigator",
+			"title": "AVR® ASM Navigator",
 			"properties": {
 				"avrAsmHints.dfpPath": {
 					"type": "string",
 					"default": "",
-					"description": "Path to a DFP root folder. If empty, it is auto-detected from .vscode/*.mplab.json packs, then resolved from installed Microchip *_DFP packs."
+					"description": "Path to a DFP root folder. If empty, it is auto-detected from .vscode/*.mplab.json packs, then resolved from installed Microchip® *_DFP packs."
 				},
 				"avrAsmHints.device": {
 					"type": "string",
 					"default": "",
-					"description": "AVR device name override (example: AVR64DA32). If empty, it is auto-detected from .vscode/*.mplab.json and then inferred from the active DFP."
+					"description": "AVR® device name override (example: AVR64DA32). If empty, it is auto-detected from .vscode/*.mplab.json and then inferred from the active DFP."
 				},
 				"avrAsmHints.autoDetectMplabProject": {
 					"type": "boolean",
@@ -110,7 +110,7 @@
 				"avrAsmHints.enableReferences": {
 					"type": "boolean",
 					"default": true,
-					"description": "Enable Find References provider for AVR assembly symbols."
+					"description": "Enable Find References provider for AVR® assembly symbols."
 				},
 				"avrAsmHints.includeDfpInWorkspaceSymbols": {
 					"type": "boolean",
