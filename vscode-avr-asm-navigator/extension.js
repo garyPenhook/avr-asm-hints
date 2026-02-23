@@ -24,7 +24,7 @@ let indexBuildPromise = null;
 const localSymbolCache = new Map();
 
 function getConfig() {
-  return vscode.workspace.getConfiguration('avrAsmHints');
+  return vscode.workspace.getConfiguration('avrAsmNavigator');
 }
 
 async function fileExists(filePath) {
@@ -1206,12 +1206,12 @@ async function rebuildIndexCommand() {
   const index = await getDfpIndex(true);
   if (!index.scannedFiles.length) {
     vscode.window.showWarningMessage(
-      `AVR® ASM Hints: no DFP symbol files found for ${index.device || 'target'} at "${index.root}".`
+      `AVR® ASM Navigator: no DFP symbol files found for ${index.device || 'target'} at "${index.root}".`
     );
     return;
   }
   vscode.window.showInformationMessage(
-    `AVR® ASM Hints index rebuilt for ${index.device || 'target'} (${index.symbolList.length} symbols).`
+    `AVR® ASM Navigator index rebuilt for ${index.device || 'target'} (${index.symbolList.length} symbols).`
   );
 }
 
@@ -1268,15 +1268,15 @@ function registerProviders(context) {
 
 function activate(context) {
   context.subscriptions.push(
-    vscode.commands.registerCommand('avrAsmHints.lookupSymbol', runLookupCommand)
+    vscode.commands.registerCommand('avrAsmNavigator.lookupSymbol', runLookupCommand)
   );
   context.subscriptions.push(
-    vscode.commands.registerCommand('avrAsmHints.rebuildIndex', rebuildIndexCommand)
+    vscode.commands.registerCommand('avrAsmNavigator.rebuildIndex', rebuildIndexCommand)
   );
 
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((event) => {
-      if (event.affectsConfiguration('avrAsmHints')) {
+      if (event.affectsConfiguration('avrAsmNavigator')) {
         cachedIndex = null;
         indexBuildPromise = null;
       }

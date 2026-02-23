@@ -34,8 +34,8 @@
 		"onLanguage:asm",
 		"onLanguage:assembly",
 		"onLanguage:gas",
-		"onCommand:avrAsmHints.lookupSymbol",
-		"onCommand:avrAsmHints.rebuildIndex"
+		"onCommand:avrAsmNavigator.lookupSymbol",
+		"onCommand:avrAsmNavigator.rebuildIndex"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -62,76 +62,76 @@
 		],
 		"commands": [
 			{
-				"command": "avrAsmHints.lookupSymbol",
+				"command": "avrAsmNavigator.lookupSymbol",
 				"title": "AVR® ASM: Lookup Symbol"
 			},
 			{
-				"command": "avrAsmHints.rebuildIndex",
+				"command": "avrAsmNavigator.rebuildIndex",
 				"title": "AVR® ASM: Rebuild Symbol Index"
 			}
 		],
 		"configuration": {
 			"title": "AVR® ASM Navigator",
 			"properties": {
-				"avrAsmHints.dfpPath": {
+				"avrAsmNavigator.dfpPath": {
 					"type": "string",
 					"default": "",
 					"description": "Path to a DFP root folder. If empty, it is auto-detected from .vscode/*.mplab.json packs, then resolved from installed Microchip® *_DFP packs."
 				},
-				"avrAsmHints.device": {
+				"avrAsmNavigator.device": {
 					"type": "string",
 					"default": "",
 					"description": "AVR® device name override (example: AVR64DA32). If empty, it is auto-detected from .vscode/*.mplab.json and then inferred from the active DFP."
 				},
-				"avrAsmHints.autoDetectMplabProject": {
+				"avrAsmNavigator.autoDetectMplabProject": {
 					"type": "boolean",
 					"default": true,
 					"description": "Auto-detect device and DFP pack from .vscode/*.mplab.json files."
 				},
-				"avrAsmHints.maxHoverResults": {
+				"avrAsmNavigator.maxHoverResults": {
 					"type": "number",
 					"default": 6,
 					"minimum": 1,
 					"maximum": 30,
 					"description": "Maximum pack symbol matches shown in hover."
 				},
-				"avrAsmHints.maxCompletionItems": {
+				"avrAsmNavigator.maxCompletionItems": {
 					"type": "number",
 					"default": 200,
 					"minimum": 20,
 					"maximum": 2000,
 					"description": "Maximum completion items returned for project/pack symbols."
 				},
-				"avrAsmHints.enableCompletion": {
+				"avrAsmNavigator.enableCompletion": {
 					"type": "boolean",
 					"default": true,
 					"description": "Enable completion items from local labels and active-target pack symbols."
 				},
-				"avrAsmHints.enableReferences": {
+				"avrAsmNavigator.enableReferences": {
 					"type": "boolean",
 					"default": true,
 					"description": "Enable Find References provider for AVR® assembly symbols."
 				},
-				"avrAsmHints.includeDfpInWorkspaceSymbols": {
+				"avrAsmNavigator.includeDfpInWorkspaceSymbols": {
 					"type": "boolean",
 					"default": true,
 					"description": "Include DFP symbols in workspace symbol search results."
 				},
-				"avrAsmHints.maxWorkspaceScanFiles": {
+				"avrAsmNavigator.maxWorkspaceScanFiles": {
 					"type": "number",
 					"default": 400,
 					"minimum": 20,
 					"maximum": 10000,
 					"description": "Maximum workspace assembly files scanned for references/workspace symbols."
 				},
-				"avrAsmHints.maxWorkspaceSymbols": {
+				"avrAsmNavigator.maxWorkspaceSymbols": {
 					"type": "number",
 					"default": 300,
 					"minimum": 20,
 					"maximum": 20000,
 					"description": "Maximum symbols returned from workspace symbol search."
 				},
-				"avrAsmHints.maxReferenceResults": {
+				"avrAsmNavigator.maxReferenceResults": {
 					"type": "number",
 					"default": 500,
 					"minimum": 20,

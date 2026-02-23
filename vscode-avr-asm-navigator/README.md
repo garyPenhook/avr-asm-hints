@@ -43,20 +43,20 @@ code --install-extension ./avr1-local.avr-asm-navigator-<version>.vsix --force
 
 ## Configuration
 
-- `avrAsmHints.dfpPath`
+- `avrAsmNavigator.dfpPath`
   - Optional explicit DFP root path override.
-- `avrAsmHints.device`
+- `avrAsmNavigator.device`
   - Optional explicit device override (example: `AVR64DA32`).
-- `avrAsmHints.autoDetectMplabProject`
+- `avrAsmNavigator.autoDetectMplabProject`
   - When enabled (default), device + pack are auto-detected from `.vscode/*.mplab.json`.
-- `avrAsmHints.maxHoverResults`
-- `avrAsmHints.maxCompletionItems`
-- `avrAsmHints.enableCompletion`
-- `avrAsmHints.enableReferences`
-- `avrAsmHints.includeDfpInWorkspaceSymbols`
-- `avrAsmHints.maxWorkspaceScanFiles`
-- `avrAsmHints.maxWorkspaceSymbols`
-- `avrAsmHints.maxReferenceResults`
+- `avrAsmNavigator.maxHoverResults`
+- `avrAsmNavigator.maxCompletionItems`
+- `avrAsmNavigator.enableCompletion`
+- `avrAsmNavigator.enableReferences`
+- `avrAsmNavigator.includeDfpInWorkspaceSymbols`
+- `avrAsmNavigator.maxWorkspaceScanFiles`
+- `avrAsmNavigator.maxWorkspaceSymbols`
+- `avrAsmNavigator.maxReferenceResults`
 
 ## Notes
 
