@@ -16,8 +16,25 @@ WORK_DIR="$(mktemp -d)"
 trap 'rm -rf "${WORK_DIR}"' EXIT
 
 mkdir -p "${WORK_DIR}/extension"
-cp -R "${ROOT_DIR}/." "${WORK_DIR}/extension/"
-find "${WORK_DIR}/extension" -name '*.vsix' -type f -delete
+rm -f "${OUT_FILE}"
+
+PACKAGE_FILES=(
+  "package.json"
+  "README.md"
+  "extension.js"
+  "language-configuration.json"
+)
+PACKAGE_DIRS=(
+  "syntaxes"
+)
+
+for file in "${PACKAGE_FILES[@]}"; do
+  cp "${ROOT_DIR}/${file}" "${WORK_DIR}/extension/${file}"
+done
+
+for dir in "${PACKAGE_DIRS[@]}"; do
+  cp -R "${ROOT_DIR}/${dir}" "${WORK_DIR}/extension/${dir}"
+done
 
 cat > "${WORK_DIR}/[Content_Types].xml" <<'EOF'
 <?xml version="1.0" encoding="utf-8"?>

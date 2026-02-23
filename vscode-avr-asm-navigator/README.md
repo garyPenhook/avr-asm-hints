@@ -88,6 +88,20 @@ If you use WSL/SSH/Container remote contexts, uninstall in that same remote cont
 - If no `.vscode/*.mplab.json` exists, the extension also tries to infer device from workspace source text (for example `ATmega4809`, `AVR128DA32`, `__AVR_*__`, `io*.h`, or `*def.inc` hints).
 - Diagnostic details are written to the `AVR ASM Navigator` output channel.
 
+## Development Checks
+
+Run local quality checks:
+
+```sh
+npm run check
+```
+
+Build VSIX using the package whitelist:
+
+```sh
+npm run package:vsix
+```
+
 ## Scope and Non-goals
 
 - This extension provides editor assistance (syntax mode, hover, completion, definitions, symbols, and references).

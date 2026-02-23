@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  extension:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vscode-avr-asm-navigator
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Package VSIX
+        run: ./package-vsix.sh
+
+      - name: Validate VSIX Contents
+        run: |
+          set -euo pipefail
+          VSIX_FILE="$(ls -1 ./*.vsix | head -n 1)"
+          unzip -l "${VSIX_FILE}" > vsix-list.txt
+
+          grep -q "extension/extension.js" vsix-list.txt
+          grep -q "extension/package.json" vsix-list.txt
+          grep -q "extension/language-configuration.json" vsix-list.txt
+          grep -q "extension/syntaxes/avr-asm.tmLanguage.json" vsix-list.txt
+
+          if grep -Eq "extension/(test/|\\.github/|package-vsix\\.sh)" vsix-list.txt; then
+            echo "VSIX contains unexpected development artifacts."
+            exit 1
+          fi
