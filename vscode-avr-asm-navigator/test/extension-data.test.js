@@ -5,11 +5,14 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const ROOT = path.resolve(__dirname, '..');
+const REPO_ROOT = path.resolve(ROOT, '..');
 const EXTENSION_JS_PATH = path.join(ROOT, 'extension.js');
 const LANGUAGE_CONFIG_PATH = path.join(ROOT, 'language-configuration.json');
 const GRAMMAR_PATH = path.join(ROOT, 'syntaxes', 'avr-asm.tmLanguage.json');
 const PACKAGE_JSON_PATH = path.join(ROOT, 'package.json');
 const PACKAGE_SCRIPT_PATH = path.join(ROOT, 'package-vsix.sh');
+const CHANGELOG_PATH = path.join(REPO_ROOT, 'CHANGELOG.md');
+const VERSIONING_POLICY_PATH = path.join(REPO_ROOT, 'docs', 'VERSIONING.md');
 
 const extensionSource = fs.readFileSync(EXTENSION_JS_PATH, 'utf8');
 
@@ -90,4 +93,18 @@ test('VSIX packaging script uses an explicit include whitelist', () => {
   assert.match(script, /PACKAGE_FILES=\(/);
   assert.match(script, /PACKAGE_DIRS=\(/);
   assert.doesNotMatch(script, /cp -R "\$\{ROOT_DIR\}\/\."/);
+});
+
+test('versioning policy exists and changelog includes the active package version', () => {
+  const packageJson = JSON.parse(fs.readFileSync(PACKAGE_JSON_PATH, 'utf8'));
+  const changelog = fs.readFileSync(CHANGELOG_PATH, 'utf8');
+  const versioningPolicy = fs.readFileSync(VERSIONING_POLICY_PATH, 'utf8');
+  const escapedVersion = packageJson.version.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  assert.match(changelog, /^# Changelog/m);
+  assert.match(changelog, new RegExp(`^## \\[${escapedVersion}\\](?:\\s|$)`, 'm'));
+
+  assert.match(versioningPolicy, /^# Versioning and Releases/m);
+  assert.match(versioningPolicy, /Semantic Versioning/i);
+  assert.match(versioningPolicy, /tag/i);
 });

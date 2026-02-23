@@ -20,7 +20,8 @@
 		"lint": "node --check extension.js",
 		"test": "node --test \"test/**/*.test.js\"",
 		"check": "npm run lint && npm run test",
-		"package:vsix": "./package-vsix.sh"
+		"package:vsix": "./package-vsix.sh",
+		"release:check": "npm run check && npm run package:vsix"
 	},
 	"files": [
 		"extension.js",

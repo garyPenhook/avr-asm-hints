@@ -31,6 +31,15 @@ code --uninstall-extension avr1-local.avr-asm-navigator
 
 Full extension documentation is in:
 - `vscode-avr-asm-navigator/README.md`
+- `CHANGELOG.md`
+- `docs/VERSIONING.md`
+
+## Release Automation
+
+Tag-based releases are automated in GitHub Actions:
+- Workflow: `.github/workflows/release.yml`
+- Trigger: push tag `v*` matching `vscode-avr-asm-navigator/package.json` version
+- Output: VSIX + SHA256 checksum attached to the GitHub Release
 
 ## Trademarks
 

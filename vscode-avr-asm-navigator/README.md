@@ -102,6 +102,21 @@ Build VSIX using the package whitelist:
 npm run package:vsix
 ```
 
+The test suite includes integration-style completion-flow coverage for operand typing patterns such as `add r16, `.
+
+## Release
+
+- Versioning policy: `../docs/VERSIONING.md`
+- Changelog: `../CHANGELOG.md`
+- Automated release workflow: `../.github/workflows/release.yml`
+
+To publish a release, push a tag that matches the package version:
+
+```sh
+git tag v<package-version>
+git push origin v<package-version>
+```
+
 ## Scope and Non-goals
 
 - This extension provides editor assistance (syntax mode, hover, completion, definitions, symbols, and references).
