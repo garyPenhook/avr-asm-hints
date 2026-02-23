@@ -58,3 +58,9 @@ code --install-extension ./avr1-local.avr-asm-navigator-0.1.4.vsix --force
 - Preferred mode is `avr-asm` (provided by this extension).
 - Designed for AVR device families supported by Microchip DFP packs.
 - Best results are with MPLAB project metadata (`.vscode/*.mplab.json`) from Microchip VS Code extensions.
+
+## Trademarks
+
+- Microchip, MPLAB, XC8, and AVR are trademarks or registered trademarks of Microchip Technology Incorporated (and its subsidiaries) in the U.S. and other countries.
+- All other trademarks are the property of their respective owners.
+- This project is an independent community project and is not affiliated with, endorsed by, or sponsored by Microchip Technology Incorporated.
