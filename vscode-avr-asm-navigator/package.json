@@ -5,13 +5,13 @@
 	"version": "0.1.4",
 	"publisher": "avr1-local",
 	"license": "MIT",
-	"homepage": "https://github.com/garyPenhook/avr-asm-hints",
+	"homepage": "https://github.com/garyPenhook/avr-asm-navigator",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/garyPenhook/avr-asm-hints.git"
+		"url": "https://github.com/garyPenhook/avr-asm-navigator.git"
 	},
 	"bugs": {
-		"url": "https://github.com/garyPenhook/avr-asm-hints/issues"
+		"url": "https://github.com/garyPenhook/avr-asm-navigator/issues"
 	},
 	"engines": {
 		"vscode": "^1.85.0"

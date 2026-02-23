@@ -4,7 +4,7 @@ Local VS Code extension that adds practical symbol help for AVR® assembly (`.S/
 Optimized for Microchip® MPLAB® XC8™ (`xc8-cc`) AVR® workflows and device-family packs (DFP).
 
 Repository:
-- https://github.com/garyPenhook/avr-asm-hints
+- https://github.com/garyPenhook/avr-asm-navigator
 
 ## Requirements
 
