@@ -34,7 +34,8 @@ jobs:
       - name: Validate VSIX Contents
         run: |
           set -euo pipefail
-          VSIX_FILE="$(ls -1 ./*.vsix | head -n 1)"
+          VSIX_FILE="$(node -p "const p=require('./package.json'); './' + p.publisher + '.' + p.name + '-' + p.version + '.vsix'")"
+          test -f "${VSIX_FILE}"
           unzip -l "${VSIX_FILE}" > vsix-list.txt
 
           grep -q "extension/extension.js" vsix-list.txt

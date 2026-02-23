@@ -2,7 +2,7 @@
 	"name": "avr-asm-navigator",
 	"displayName": "AVR® ASM Navigator",
 	"description": "Hover, definition, completion, and symbol lookup helpers for AVR® assembly projects.",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"publisher": "avr1-local",
 	"license": "MIT",
 	"homepage": "https://github.com/garyPenhook/avr-asm-navigator",

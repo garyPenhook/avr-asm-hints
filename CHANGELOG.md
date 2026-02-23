@@ -6,6 +6,8 @@ The format follows Keep a Changelog and version numbers follow Semantic Versioni
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-02-23
+
 ### Added
 - Release automation for tag-based VSIX publishing and checksum generation.
 - Completion flow tests that execute the registered provider against realistic operand scenarios.
@@ -20,5 +22,6 @@ The format follows Keep a Changelog and version numbers follow Semantic Versioni
 - CI checks with lint, test, and VSIX content validation.
 - Hardened VSIX packaging script using an explicit file/dir whitelist.
 
-[Unreleased]: https://github.com/garyPenhook/avr-asm-navigator/compare/v0.1.4...HEAD
+[Unreleased]: https://github.com/garyPenhook/avr-asm-navigator/compare/v0.1.5...HEAD
+[0.1.5]: https://github.com/garyPenhook/avr-asm-navigator/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/garyPenhook/avr-asm-navigator/releases/tag/v0.1.4
