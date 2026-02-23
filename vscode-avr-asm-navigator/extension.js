@@ -178,6 +178,18 @@ const AVR_NO_OPERAND_INSTRUCTIONS = new Set([
   'spm',
   'wdr'
 ]);
+const AVR_REGISTER_NAMES = Object.freeze([
+  ...Array.from({ length: 32 }, (_, index) => `r${index}`),
+  'x',
+  'y',
+  'z',
+  'xl',
+  'xh',
+  'yl',
+  'yh',
+  'zl',
+  'zh'
+]);
 
 const cachedIndexByScope = new Map();
 const indexBuildPromiseByScope = new Map();
@@ -1673,6 +1685,30 @@ async function provideCompletionItems(document, position, token) {
     }
   }
 
+  for (const registerName of AVR_REGISTER_NAMES) {
+    if (isCancelled(token)) {
+      return results;
+    }
+    if (seen.has(completionSeenKey(registerName))) {
+      continue;
+    }
+    if (!startsWithIgnoreCase(registerName, prefix)) {
+      continue;
+    }
+
+    const item = new vscode.CompletionItem(
+      registerName,
+      vscode.CompletionItemKind.Variable
+    );
+    item.detail = 'AVR register';
+    item.sortText = `1_${registerName}`;
+    results.push(item);
+    seen.add(completionSeenKey(registerName));
+    if (results.length >= maxItems) {
+      return results;
+    }
+  }
+
   if (getConfig().get('enableInstructionCompletion', true)) {
     for (const mnemonic of AVR_INSTRUCTION_MNEMONICS) {
       if (isCancelled(token)) {
@@ -1693,7 +1729,7 @@ async function provideCompletionItems(document, position, token) {
       item.insertText = AVR_NO_OPERAND_INSTRUCTIONS.has(mnemonic)
         ? mnemonic
         : `${mnemonic} `;
-      item.sortText = `1_${mnemonic}`;
+      item.sortText = `2_${mnemonic}`;
       results.push(item);
       seen.add(completionSeenKey(mnemonic));
       if (results.length >= maxItems) {
@@ -1726,7 +1762,7 @@ async function provideCompletionItems(document, position, token) {
       const relPath = path.relative(index.root, first.file) || first.file;
       item.detail = `${first.kind} from ${relPath}:${first.line}`;
     }
-    item.sortText = `2_${symbol}`;
+    item.sortText = `3_${symbol}`;
     results.push(item);
     seen.add(completionSeenKey(symbol));
     if (results.length >= maxItems) {
@@ -1928,7 +1964,8 @@ function registerProviders(context) {
         provideCompletionItems
       },
       '_',
-      '.'
+      '.',
+      ','
     )
   );
 
