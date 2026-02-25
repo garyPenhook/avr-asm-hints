@@ -659,17 +659,84 @@ async function detectMplabTarget(preferredWorkspaceFolder = null) {
             : ''
       };
 
+      let xc8Version = '';
+      const toolchainName =
+        typeof config.toolchain === 'string' ? config.toolchain.trim() : '';
+      if (toolchainName) {
+        const groups = Array.isArray(parsed.propertyGroups)
+          ? parsed.propertyGroups
+          : [];
+        const toolchainGroup = groups.find(
+          (group) =>
+            group &&
+            group.type === 'toolchain' &&
+            typeof group.name === 'string' &&
+            group.name === toolchainName
+        );
+        if (
+          toolchainGroup &&
+          typeof toolchainGroup.provider === 'string' &&
+          toolchainGroup.provider.toLowerCase().includes('xc8@')
+        ) {
+          const versionMatch = /xc8@([0-9.]+)/i.exec(toolchainGroup.provider);
+          if (versionMatch) {
+            xc8Version = versionMatch[1];
+          }
+        }
+      }
+
       if (device || packCandidate) {
         return {
           workspaceFolder: folder.uri.toString(),
           projectFile: fullUri.toString(),
           device: device || '',
-          pack
+          pack,
+          xc8Version
         };
       }
     }
   }
   return null;
+}
+
+async function resolveCompilerIncludeDirs(detected = null) {
+  const candidates = [];
+  const seen = new Set();
+  const addCandidate = (dirPath) => {
+    if (!dirPath) {
+      return;
+    }
+    const normalized = path.normalize(dirPath);
+    if (seen.has(normalized)) {
+      return;
+    }
+    seen.add(normalized);
+    candidates.push(normalized);
+  };
+
+  if (detected && detected.xc8Version) {
+    addCandidate(
+      path.join('/opt/microchip/xc8', `v${detected.xc8Version}`, 'avr', 'avr', 'include', 'avr')
+    );
+    addCandidate(
+      path.join('/opt/microchip/xc8', detected.xc8Version, 'avr', 'avr', 'include', 'avr')
+    );
+  }
+
+  const xc8Root = '/opt/microchip/xc8';
+  const xc8Versions = await listDirSafe(xc8Root);
+  const sortedVersions = xc8Versions.sort((a, b) => compareVersionLabels(b, a));
+  for (const version of sortedVersions) {
+    addCandidate(path.join(xc8Root, version, 'avr', 'avr', 'include', 'avr'));
+  }
+
+  const existing = [];
+  for (const candidate of candidates) {
+    if (await isDirectory(candidate)) {
+      existing.push(candidate);
+    }
+  }
+  return existing;
 }
 
 async function defaultDfpPath(vendor = DEFAULT_PACK_VENDOR) {
@@ -892,6 +959,22 @@ async function resolveIndexFiles(scope = null) {
   if (incPath) {
     files.push({ kind: 'inc', filePath: incPath });
   }
+
+  // Add AVR core headers so function-like macros (for example _BV(bit))
+  // are available for hover/definition in assembly files.
+  const compilerIncludeDirs = await resolveCompilerIncludeDirs(detected);
+  const coreHeaderNames = ['common.h', 'sfr_defs.h', 'interrupt.h', 'io.h'];
+  const indexedPaths = new Set(files.map((entry) => entry.filePath));
+  for (const includeDir of compilerIncludeDirs) {
+    for (const headerName of coreHeaderNames) {
+      const candidate = path.join(includeDir, headerName);
+      if (!indexedPaths.has(candidate) && (await fileExists(candidate))) {
+        files.push({ kind: 'header', filePath: candidate });
+        indexedPaths.add(candidate);
+      }
+    }
+  }
+
   const atdfPath = await resolveAtdfPath(packRoot, device, deviceLowerName, token);
   if (atdfPath) {
     files.push({ kind: 'atdf', filePath: atdfPath });
